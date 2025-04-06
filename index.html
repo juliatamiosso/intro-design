@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/solid.css" integrity="sha384-Tv5i09RULyHKMwX0E8wJUqSOaXlyu3SQxORObAI08iUwIalMmN5L6AvlPX2LMoSE" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style.css">
+    <title>Introdução ao Design</title>
+</head>
+<body onload="searchIpUser()">
+
+    <div class="content">
+        <header>
+            <p><span class="fa fa-map-pin" style="margin-right: 10px;"></span>Porto Alegre, RS</p>
+            <p class="text-time"><span id="time"></span></p>
+        </header>
+        <nav>
+            <div class="input-group" style="max-width: 360px;">
+                <input type="text" class="form-control form-control-sm" id="txtSearchCity" placeholder="Buscar cidade" aria-label="Buscar cidade">
+                <div class="input-group-append">
+                    <button class="btn btn-light" type="button" id="btnSearch"><span class="fa fa-search"></span></button>
+                  </div>
+            </div>
+        </nav>
+        <div class="show-result">
+            <div class="show-result_header">
+                <p>Tempo agora em <b><span id="city"></span></b></p>
+            </div>
+            <div class="show-result_main">
+                <div class="image-climate">
+                    <img src="./img/teste.jpg" class="drawing">
+                </div>
+                <div class="main_text">
+                    <div class="climate-condition">
+                        <h3><span id="description"></span></h3>
+                    </div>
+                    <div class="temperature">
+                        <h1><span id="temp"></span>°C</h1>
+                    </div> 
+                </div>
+                <hr>
+            </div>
+            <div class="others">
+                <table class="others">
+                    <tr>
+                        <td class="symbol"><span class="fa fa-cloud-rain"></span></td>
+                        <td class="key">Chuva</td>
+                        <td class="value"><span id="rain"></span>mm</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol"><span class="fa fa-tint"></span></td>
+                        <td class="key">Umidade</td>
+                        <td class="value"><span id="humidity"></span>%</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol"><span class="fa fa-cloud"></span></td>
+                        <td class="key">Neblina</td>
+                        <td class="value"><span id="cloudiness"></span>%</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol"><span class="fa fa-wind"></span></td>
+                        <td class="key">Ventos</td>
+                        <td class="value"><span id="wind"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol"><span class="fa fa-sun"></span></td>
+                        <td class="key">Nascer do sol</td>
+                        <td class="value"><span id="sunrise"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol"><span class="fa fa-moon"></span></td>
+                        <td class="key">Pôr do sol</td>
+                        <td class="value"><span id="sunset"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <footer>
+            <p>Introdução ao Design - Trabalho 1</p>
+            <p>Júlia Cabral Tamiosso</p>
+        </footer>
+    </div>    
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+    function searchIpUser() {
+        const url = `https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&city_name=porto_alegre,RS`;
+
+        fetch(url, { 
+            method : "GET",
+        }) 
+        .then(resp => resp.json())
+        .then(data => {
+            showResult(data);
+            updateCurrentTime(); // Atualiza o horário atual ao carregar a página
+        })
+        .catch(error => console.error(error));
+    }
+
+    function updateCurrentTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('time').textContent = `${hours}:${minutes}`;
+    }
+
+    function convertTo24HourFormat(time12h) {
+        let [time, modifier] = time12h.split(' ');
+        let [hours, minutes] = time.split(':');
+
+        if (modifier.toLowerCase() === 'pm' && hours !== '12') {
+            hours = String(parseInt(hours) + 12);
+        } else if (modifier.toLowerCase() === 'am' && hours === '12') {
+            hours = '00';
+        }
+
+        return `${hours.padStart(2, '0')}:${minutes}`;
+    }
+
+    const txtSearchCity = document.getElementById("txtSearchCity");
+
+    const btnSearch = document.getElementById("btnSearch");
+
+    function getData (data){
+        fetch(`https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&city_name=${data}`, { 
+            method : "GET", // promise
+            })
+            .then(response =>response.json())
+            .then(data=>{
+                console.log(data);
+                const { results } = data;
+                
+                if(data.by === 'default') {
+                    console.log("Default")
+                alert('Por favor, digite um nome válido...');
+                txtSearchCity.value='';
+                const resultadoData = document.getElementById('result-data');
+                resultadoData.innerHTML = '';
+                }
+            else {
+                showResult(data)
+            }        
+            }).catch(erro=>{
+                    console.log(erro);
+              });;
+        }
+
+    function showResult(data) {
+        console.log(data);
+        const { results } = data;
+
+        document.getElementById('city').innerHTML = `${results.city}`.toUpperCase();
+        document.getElementById('temp').innerHTML = `${results.temp}`;
+        document.getElementById('description').innerHTML = `${results.description}`;
+        document.getElementById('rain').innerHTML = `${results.rain}`;
+        document.getElementById('humidity').innerHTML = `${results.humidity}`;
+        document.getElementById('cloudiness').innerHTML = `${results.cloudiness}`;
+        document.getElementById('wind').innerHTML = `${results.wind_speedy}`;
+        document.getElementById('sunrise').innerHTML = convertTo24HourFormat(results.sunrise);
+        document.getElementById('sunset').innerHTML = convertTo24HourFormat(results.sunset);
+    }
+
+    setInterval(updateCurrentTime, 60000); 
+
+    btnSearch.addEventListener('click', function(e){
+            e.preventDefault();
+            data=txtSearchCity.value;
+
+            if(data===''){
+                alert('Por favor, digite um nome válido...');
+                txtSearchCity.value='';
+                const resultadoData = document.getElementById('result-data');
+                resultadoData.innerHTML = '';
+            }else{
+                getData(data);
+                txtSearchCity.value='';
+            }
+        })
+        btnSearch.addEventListener('keypress', function(e){
+            
+        })
+
+</script>
+</html>

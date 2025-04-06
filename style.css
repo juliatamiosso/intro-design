@@ -1,0 +1,132 @@
+@media (max-width: 375px) {
+body {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    width: 375px;
+    max-width: 375px;
+    background-color: rgb(245 231 237);
+}
+
+header {
+    background-color: rgb(118, 59, 83);
+    color: white;
+    height: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 40px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-time {
+    font-size: 12px;
+}
+
+nav {
+    margin-bottom: 10px;
+    margin-left: 7px;
+}
+
+#btnSearch {
+    background-color: white;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #DFE2E6;
+    color: #5A5C5E;
+}
+
+.show-result {
+    background-color: white;
+    border-radius: 10px;
+    height: max-content;
+    width: 335px;
+    margin: 20px;
+    padding: 0;
+    padding-bottom: 15px;
+}
+
+.show-result_header {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 40px;
+    border-bottom: 1px solid #c8c8c9;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 15px 10px 15px;
+    font-size: 14px;
+}
+
+.show-result_header p {
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.show-result_header b {
+    font-weight:900;
+}
+
+.drawing {
+    max-width: 300px;
+    border-radius: 10px;
+    margin: 20px 0px 20px 0px;
+}
+
+.show-result_main {
+    text-align: center;
+}
+
+.main_text {
+    display: flex;
+    margin: 0 20px 0px 20px;
+    text-align: left;
+    justify-content: space-between;
+    height: max-content;
+}
+
+.main_text .climate-condition {
+    max-width: 100px;
+}
+
+.main_text .temperature #temp {
+    text-align: right;
+    font-size: 50px;
+    letter-spacing: -5px;
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+.others {
+    font-size: 17px;
+    padding: 0 20px 0 20px;
+    line-height: 2;
+    width: 100%;
+}
+
+.others .symbol {
+    width: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.others .key {
+    padding-left: 15px;
+}
+
+.others .value {
+    text-align: right;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+footer {
+    margin-top: 25px;
+    background-color: rgb(118, 59, 83);
+    color: white;
+    height: 60px;
+    padding: 15px 15px 10px 15px;
+    line-height: 0.5;
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+}
+
+}
