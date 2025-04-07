@@ -62,10 +62,14 @@ nav {
     font-weight:900;
 }
 
-.show-image img {
+.show-song {
+    height: max-content;
+}
+
+.show-song iframe {
     max-width: 300px;
     border-radius: 10px;
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px 0px 0px;
 }
 
 .show-result_main {
@@ -77,7 +81,7 @@ nav {
     margin: 0 20px 0px 20px;
     text-align: left;
     justify-content: space-between;
-    height: max-content;
+    height: 61.5px;
 }
 
 .main_text .climate-condition {
@@ -117,7 +121,7 @@ nav {
 }
 
 footer {
-    margin-top: 25px;
+    margin-top: 20px;
     background-color: rgb(118, 59, 83);
     color: white;
     height: 60px;
