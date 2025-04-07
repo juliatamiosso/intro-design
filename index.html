@@ -31,7 +31,7 @@
             </div>
             <div class="show-result_main">
                 <div class="show-song">
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6nrSo5ZWhsai0oeX257rRF?utm_source=generator" width="90%" height="92" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6dGnYIeXmHdcikdzNNDMm2?utm_source=generator" width="90%" height="92" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
                 <div class="main_text">
                     <div class="climate-condition">
@@ -86,103 +86,5 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script>
-    function searchIpUser() {
-        const url = `https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&city_name=porto_alegre,RS`;
-
-        fetch(url, { 
-            method : "GET",
-        }) 
-        .then(resp => resp.json())
-        .then(data => {
-            showResult(data);
-            updateCurrentTime(); // Atualiza o horário atual ao carregar a página
-        })
-        .catch(error => console.error(error));
-    }
-
-    function updateCurrentTime() {
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        document.getElementById('time').textContent = `${hours}:${minutes}`;
-    }
-
-    function convertTo24HourFormat(time12h) {
-        let [time, modifier] = time12h.split(' ');
-        let [hours, minutes] = time.split(':');
-
-        if (modifier.toLowerCase() === 'pm' && hours !== '12') {
-            hours = String(parseInt(hours) + 12);
-        } else if (modifier.toLowerCase() === 'am' && hours === '12') {
-            hours = '00';
-        }
-
-        return `${hours.padStart(2, '0')}:${minutes}`;
-    }
-
-    const txtSearchCity = document.getElementById("txtSearchCity");
-
-    const btnSearch = document.getElementById("btnSearch");
-
-    function getData (data){
-        fetch(`https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&city_name=${data}`, { 
-            method : "GET", // promise
-            })
-            .then(response =>response.json())
-            .then(data=>{
-                console.log(data);
-                const { results } = data;
-                
-                if(data.by === 'default') {
-                    console.log("Default")
-                alert('Por favor, digite um nome válido...');
-                txtSearchCity.value='';
-                const resultadoData = document.getElementById('result-data');
-                resultadoData.innerHTML = '';
-                }
-            else {
-                showResult(data)
-            }        
-            }).catch(erro=>{
-                    console.log(erro);
-              });;
-        }
-
-    function showResult(data) {
-        console.log(data);
-        const { results } = data;
-
-        document.getElementById('city').innerHTML = `${results.city}`.toUpperCase();
-        document.getElementById('temp').innerHTML = `${results.temp}`;
-        document.getElementById('description').innerHTML = `${results.description}`;
-        document.getElementById('rain').innerHTML = `${results.rain}`;
-        document.getElementById('humidity').innerHTML = `${results.humidity}`;
-        document.getElementById('cloudiness').innerHTML = `${results.cloudiness}`;
-        document.getElementById('wind').innerHTML = `${results.wind_speedy}`;
-        document.getElementById('sunrise').innerHTML = convertTo24HourFormat(results.sunrise);
-        document.getElementById('sunset').innerHTML = convertTo24HourFormat(results.sunset);
-    }
-
-    setInterval(updateCurrentTime, 60000); 
-
-    btnSearch.addEventListener('click', function(e){
-            e.preventDefault();
-            data=txtSearchCity.value;
-
-            if(data===''){
-                alert('Por favor, digite um nome válido...');
-                txtSearchCity.value='';
-                const resultadoData = document.getElementById('result-data');
-                resultadoData.innerHTML = '';
-            }else{
-                getData(data);
-                txtSearchCity.value='';
-            }
-        })
-        btnSearch.addEventListener('keypress', function(e){
-            
-        })
-
-</script>
+<script src="./script.js"></script>
 </html>
